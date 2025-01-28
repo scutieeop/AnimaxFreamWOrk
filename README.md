@@ -1,7 +1,7 @@
 # 🚀 AniMax Framework
 
 <div align="center">
-  <img src="https://via.placeholder.com/800x400?text=AniMax+Framework" alt="AniMax Framework" style="border-radius: 10px; margin: 20px 0;">
+  <img src="https://cdn.discordapp.com/attachments/1330903506038558891/1333867698026840134/animaxreverse.png?ex=679a7499&is=67992319&hm=b8eba9d70a3a82aadfd2a1e4294c1556a83f911a13ad94985cdc4017b53192b8&" alt="AniMax Framework" style="border-radius: 10px; margin: 20px 0;">
 
   <p align="center">
     <strong>Modern ve özgün web uygulama geliştirme çerçevesi</strong>
