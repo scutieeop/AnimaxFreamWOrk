@@ -1,0 +1,106 @@
+AniMax Framework Lisans Sözleşmesi (v1.0)
+
+Telif Hakkı (c) 2024 AniMax Framework
+
+1. TANIMLAR
+
+"Yazılım" - AniMax Framework ve ilgili tüm bileşenleri ifade eder.
+"Lisans" - Bu belgedeki tüm şartları ve koşulları ifade eder.
+"Kullanıcı" - Yazılımı kullanan gerçek veya tüzel kişiyi ifade eder.
+"Ticari Kullanım" - Yazılımın gelir elde etmek amacıyla kullanılmasını ifade eder.
+
+2. KULLANIM HAKLARI
+
+2.1. Açık Kaynak Kullanımı
+- Yazılım açık kaynak olarak kullanılabilir.
+- Kaynak kodu görüntülenebilir ve değiştirilebilir.
+- Eğitim amaçlı kullanılabilir.
+
+2.2. Ticari Kullanım
+- Ticari kullanım için yıllık lisans gereklidir.
+- Ticari lisans, kullanıcı başına veya proje başına alınabilir.
+- Ticari lisans ücretleri resmi web sitesinde belirtilmiştir.
+
+2.3. Özel Projeler
+- Kişisel projeler için ücretsiz kullanılabilir.
+- Kar amacı gütmeyen organizasyonlar için özel lisans koşulları mevcuttur.
+
+3. KISITLAMALAR
+
+3.1. Yeniden Dağıtım
+- Yazılımın kaynak kodu değiştirilmeden dağıtılamaz.
+- Değiştirilen kaynak kodu, aynı lisans altında dağıtılmalıdır.
+- Dağıtımlarda orijinal telif hakkı bildirimi korunmalıdır.
+
+3.2. Marka Kullanımı
+- AniMax Framework adı ve logosu izinsiz kullanılamaz.
+- Türev çalışmalarda farklı bir isim kullanılmalıdır.
+
+3.3. Güvenlik
+- Yazılımın güvenlik özellikleri devre dışı bırakılamaz.
+- Kötü amaçlı kod eklenemez.
+- Güvenlik açıkları tespit edildiğinde bildirilmelidir.
+
+4. SORUMLULUK REDDİ
+
+4.1. Garanti
+- Yazılım "olduğu gibi" sağlanır.
+- Hiçbir garanti verilmez.
+- Yazılımın kullanımından doğacak sorunlardan kullanıcı sorumludur.
+
+4.2. Hasar Sorumluluğu
+- Yazılımın kullanımından kaynaklanan hasarlardan geliştirici sorumlu tutulamaz.
+- Veri kaybı veya sistem arızaları kullanıcının sorumluluğundadır.
+
+5. GÜVENLİK ÖNLEMLERİ
+
+5.1. Kod Doğrulama
+- Her sürüm dijital olarak imzalanır.
+- Sürüm imzaları resmi web sitesinde yayınlanır.
+- Kullanıcılar indirdikleri sürümlerin imzalarını doğrulamalıdır.
+
+5.2. Güvenlik Güncellemeleri
+- Kritik güvenlik güncellemeleri zorunludur.
+- Güvenlik güncellemeleri 24 saat içinde uygulanmalıdır.
+- Güvenlik güncellemeleri atlanarak kullanım yapılamaz.
+
+6. VERİ KORUMA
+
+6.1. Kullanıcı Verileri
+- Framework, kullanıcı verilerini toplamaz.
+- Toplanan teknik veriler anonim olarak işlenir.
+- Veri koruma yasalarına uyum zorunludur.
+
+6.2. Veri Güvenliği
+- Kullanıcı verileri şifrelenerek saklanmalıdır.
+- Üçüncü taraf entegrasyonları güvenlik denetiminden geçmelidir.
+
+7. SONLANDIRMA
+
+7.1. Lisans İhlali
+- Lisans şartlarının ihlali durumunda kullanım hakkı otomatik olarak sonlanır.
+- İhlal durumunda tüm kopyalar imha edilmelidir.
+
+7.2. Gönüllü Sonlandırma
+- Kullanıcı istediği zaman kullanımı sonlandırabilir.
+- Sonlandırma durumunda tüm kopyalar silinmelidir.
+
+8. GÜNCELLEMELER
+
+8.1. Lisans Güncellemeleri
+- Lisans şartları güncellenebilir.
+- Güncellemeler web sitesinde duyurulur.
+- Kullanıcılar güncel lisans şartlarını kabul etmelidir.
+
+9. İLETİŞİM
+
+9.1. Destek
+- Teknik destek resmi kanallar üzerinden sağlanır.
+- Güvenlik bildirimleri için: security@animax.framework
+- Lisans soruları için: license@animax.framework
+
+10. KABUL
+
+Bu lisansı kullanan herkes, yukarıdaki tüm şartları kabul etmiş sayılır. Şartların herhangi birinin ihlali, tüm hakların sonlanmasına neden olur.
+
+Son Güncelleme: 28.01.2024 

@@ -1,0 +1,231 @@
+const fs = require('fs-extra');
+const vm = require('vm');
+
+class MaxParser {
+  constructor() {
+    this.cache = new Map();
+  }
+
+  async parseFile(filePath) {
+    const content = await fs.readFile(filePath, 'utf-8');
+    return this.parse(content);
+  }
+
+  parse(content) {
+    const sections = this.extractSections(content);
+    const pageConfig = this.parsePageConfig(sections.page);
+    const backendCode = this.parseBackendCode(sections.backend);
+    const template = this.parseTemplate(sections.template);
+
+    return {
+      pageConfig,
+      backendCode,
+      template
+    };
+  }
+
+  extractSections(content) {
+    const sections = {
+      page: '',
+      backend: '',
+      template: ''
+    };
+
+    // @page bölümünü çıkar
+    const pageMatch = content.match(/@page\s*{([^}]*)}/);
+    if (pageMatch) {
+      sections.page = pageMatch[1];
+    }
+
+    // @backend bölümünü ve alt etiketlerini çıkar
+    const backendMatch = content.match(/@backend\s*{([^}]*)}/);
+    if (backendMatch) {
+      sections.backend = this.parseBackendTags(backendMatch[1]);
+    }
+
+    // <template> bölümünü çıkar
+    const templateMatch = content.match(/<template>([\s\S]*)<\/template>/);
+    if (templateMatch) {
+      sections.template = templateMatch[1];
+    }
+
+    return sections;
+  }
+
+  parseBackendTags(content) {
+    const tags = {
+      db: [],
+      api: [],
+      socket: [],
+      auth: []
+    };
+
+    // Her bir backend etiketini bul ve işle
+    Object.keys(tags).forEach(tag => {
+      const regex = new RegExp(`@${tag}\\s*{([^}]*)}`, 'g');
+      let match;
+      while ((match = regex.exec(content)) !== null) {
+        tags[tag].push(match[1].trim());
+      }
+    });
+
+    // Tüm etiketleri birleştir
+    return Object.entries(tags)
+      .filter(([_, code]) => code.length > 0)
+      .map(([tag, code]) => {
+        return `// @${tag}\n${code.join('\n')}`;
+      })
+      .join('\n\n');
+  }
+
+  parsePageConfig(configStr) {
+    if (!configStr) return {};
+    
+    try {
+      const config = {};
+      configStr.split('\n').forEach(line => {
+        const [key, value] = line.split(':').map(s => s.trim());
+        if (key && value) {
+          config[key] = value.replace(/['"]/g, '');
+        }
+      });
+      return config;
+    } catch (error) {
+      console.error('Page config parsing error:', error);
+      return {};
+    }
+  }
+
+  parseBackendCode(code) {
+    if (!code) return null;
+
+    try {
+      const context = {
+        require,
+        console,
+        process,
+        // Backend API'lerini ekle
+        db: this.createDatabaseAPI(),
+        api: this.createAPIClient(),
+        socket: this.createSocketAPI(),
+        auth: this.createAuthAPI()
+      };
+      
+      const script = new vm.Script(code);
+      const vmContext = vm.createContext(context);
+      return script.runInContext(vmContext);
+    } catch (error) {
+      console.error('Backend code execution error:', error);
+      return null;
+    }
+  }
+
+  parseTemplate(template) {
+    if (!template) return '';
+
+    // Özel etiketleri işle
+    template = this.processCustomTags(template);
+
+    // Dinamik içerikleri işle
+    return template.replace(/{([^}]+)}/g, (match, expr) => {
+      try {
+        return `\${${expr.trim()}}`;
+      } catch (error) {
+        console.error('Template parsing error:', error);
+        return match;
+      }
+    });
+  }
+
+  processCustomTags(template) {
+    // Layout etiketleri
+    template = template.replace(/@container/g, 'class="container"');
+    template = template.replace(/@flex/g, 'class="flex"');
+    template = template.replace(/@grid/g, 'class="grid"');
+    template = template.replace(/@center/g, 'class="center"');
+
+    // Bileşen etiketleri
+    template = template.replace(/@card/g, 'class="card"');
+    template = template.replace(/@button/g, 'class="button"');
+    template = template.replace(/@input/g, 'class="input"');
+    template = template.replace(/@avatar/g, 'class="avatar"');
+    template = template.replace(/@badge/g, 'class="badge"');
+    template = template.replace(/@alert/g, 'class="alert"');
+
+    // Tipografi etiketleri
+    template = template.replace(/@title/g, 'class="title"');
+    template = template.replace(/@subtitle/g, 'class="subtitle"');
+    template = template.replace(/@text/g, 'class="text"');
+    template = template.replace(/@caption/g, 'class="caption"');
+
+    return template;
+  }
+
+  // Backend API'leri
+  createDatabaseAPI() {
+    return {
+      collection: (name) => ({
+        find: async () => [],
+        findOne: async (id) => ({}),
+        insert: async (data) => data,
+        update: async (id, data) => data,
+        delete: async (id) => true
+      })
+    };
+  }
+
+  createAPIClient() {
+    return {
+      get: async (url) => fetch(url),
+      post: async (url, data) => fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(data)
+      }),
+      put: async (url, data) => fetch(url, {
+        method: 'PUT',
+        body: JSON.stringify(data)
+      }),
+      delete: async (url) => fetch(url, {
+        method: 'DELETE'
+      })
+    };
+  }
+
+  createSocketAPI() {
+    return {
+      on: (event, callback) => {},
+      emit: (event, data) => {},
+      broadcast: {
+        emit: (event, data) => {}
+      }
+    };
+  }
+
+  createAuthAPI() {
+    return {
+      user: {
+        isAuthenticated: false,
+        id: null,
+        roles: []
+      },
+      login: async (credentials) => {},
+      logout: async () => {},
+      register: async (userData) => {}
+    };
+  }
+
+  async render(filePath, data = {}) {
+    const parsed = await this.parseFile(filePath);
+    const template = parsed.template;
+    
+    try {
+      const fn = new Function('data', `return \`${template}\`;`);
+      return fn(data);
+    } catch (error) {
+      console.error('Template rendering error:', error);
+      throw error;
+    }
+  }
+}
+
+module.exports = new MaxParser(); 
